@@ -34,8 +34,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class EarthquakeActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Earthquake>> {
@@ -139,9 +144,26 @@ public class EarthquakeActivity extends AppCompatActivity
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendQueryParameter("format", "geojson");
-        uriBuilder.appendQueryParameter("limit", "10");
+        uriBuilder.appendQueryParameter("limit", "20");
         uriBuilder.appendQueryParameter("minmag", minMagnitude);
         uriBuilder.appendQueryParameter("orderby", orderBy);
+
+        //For Nepal past 180 days report
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        df.setTimeZone(tz);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -180);
+        Date date= cal.getTime();
+
+        String nowAsISO = df.format(date);
+
+        uriBuilder.appendQueryParameter("starttime", nowAsISO);
+        uriBuilder.appendQueryParameter("minlatitude", "26.36");
+        uriBuilder.appendQueryParameter("minlongitude", "80.06");
+        uriBuilder.appendQueryParameter("maxlatitude", "30.43");
+        uriBuilder.appendQueryParameter("maxlongitude","88.20");
 
         return new EarthquakeLoader(this, uriBuilder.toString());
     }
