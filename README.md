@@ -1,3 +1,5 @@
+#By: Udacity.com
+
 Quake Report App
 ===================================
 
