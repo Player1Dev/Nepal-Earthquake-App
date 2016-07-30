@@ -1,8 +1,8 @@
 
-Quake Report App
+Nepal-Earthquake-App
 ===================================
 
-This app displays a list of recent earthquakes in the world
+This app displays a list of recent earthquakes in the Nepal
 from the U.S. Geological Survey (USGS) organization.
 
 Based on: Udacity.com Courses
